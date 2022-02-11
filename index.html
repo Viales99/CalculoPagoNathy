@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo pagos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="card text-center m-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Cálculo de pago semanal por entrevistas</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-form-inline">
+                        <div class="col">
+                            <div class="form-group">                                
+                                <label class="form-label">Número de entrevistas:</label>
+                                <input id="NumeroEntrevistas" type="number" placeholder="Número de entrevistas" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button type="button" id="BtnCalcular" onclick="Calcular()" class="btn btn-primary mb-2">Calcular</button>
+                            <button type="button" id="BtnLimpiar" onclick="Limpiar()" class="btn btn-primary mb-2">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>   
+            
+                <div class="card text-center m-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Resultado</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Pago bruto:</label>
+                            
+                            
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">₡</div>
+                                    </div>
+                                    <input readonly id="PagoBruto" class="form-control">
+                                </div>                              
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Descuento del seguro:</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">₡</div>
+                                    </div>
+                                    <input readonly id="Descuento" class="form-control">
+                                </div>                               
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Pago Neto:</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">₡</div>
+                                    </div>                                    
+                                    <input readonly id="PagoNeto" class="form-control">
+                                </div>  
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>   
+            </div>       
+
+        </div>
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+    <script>
+
+        function Calcular (){
+            let numero = GetValue("NumeroEntrevistas");
+            let pagoBruto = numero*5000;
+            SetValue("PagoBruto", pagoBruto);
+
+            let descuento = pagoBruto/100*10.5;
+            SetValue("Descuento", descuento);
+
+            let pagoNeto = pagoBruto-descuento;
+            SetValue("PagoNeto", pagoNeto);
+            
+        }
+
+        function Limpiar(){
+            SetValue("NumeroEntrevistas", 0);
+            SetValue("PagoBruto", "");
+            SetValue("Descuento", "");
+            SetValue("PagoNeto", "");
+        }
+
+        function Formato(value){     
+            return value.toString().replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".");
+	    }  
+
+        function GetValue(id){
+            return document.getElementById(id).value
+        }
+        function SetValue(id, value){
+            document.getElementById(id).value = Formato(value);
+        }
+    </script>
+
+</body>
+</html>
